@@ -111,6 +111,51 @@ const demoProducts = [
     description: 'A sleek, durable backpack for commutes, campus days, and city escapes.',
     image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
   },
+  {
+    id: 'prod-12',
+    name: 'Coastline Bikini Set',
+    price: 89.0,
+    stock: 18,
+    category: 'Girls',
+    description: 'Bright beach-ready essentials with flattering cuts and soft, breathable fabrics.',
+    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-13',
+    name: 'Luna Swim Cover',
+    price: 74.0,
+    stock: 20,
+    category: 'Girls',
+    description: 'A polished cover-up for sunny escapes, pool days, and laid-back vacation styling.',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-14',
+    name: 'Nova Pro Earbuds',
+    price: 169.0,
+    stock: 26,
+    category: 'Electronics',
+    description: 'Premium wireless sound with crystal-clear calls and a compact charging case.',
+    image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-15',
+    name: 'Pulse Smart Speaker',
+    price: 129.0,
+    stock: 14,
+    category: 'Electronics',
+    description: 'Voice-ready home audio with balanced sound, deep bass, and modern smart controls.',
+    image: 'https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-16',
+    name: 'GlowBeam Desk Lamp',
+    price: 59.0,
+    stock: 32,
+    category: 'Home',
+    description: 'Warm ambient lighting with touch controls and a minimalist desk-ready silhouette.',
+    image: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80',
+  },
 ];
 
 const girlsLookbook = Array.from({ length: 5000 }, (_, index) => {
@@ -494,18 +539,18 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
           </article>
 
           <article className="showcase-card">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Girls blazer" />
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Girls bikini" />
             <div className="showcase-copy">
-              <span>Minimal luxe</span>
-              <h3>Soft blazer</h3>
+              <span>Beach ready</span>
+              <h3>Coastline bikini</h3>
             </div>
           </article>
 
           <article className="showcase-card">
-            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80" alt="Girls outfit" />
+            <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=900&q=80" alt="Tech accessories" />
             <div className="showcase-copy">
-              <span>Everyday</span>
-              <h3>Street chic</h3>
+              <span>Tech essentials</span>
+              <h3>Nova audio</h3>
             </div>
           </article>
         </div>
@@ -538,67 +583,36 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
         </div>
       </section>
 
-      <aside className="cart-panel">
-        <h2>Shopping cart</h2>
-        {cart.length === 0 ? (
-          <p className="empty-state">Your cart is empty. Add a few essentials to get started.</p>
-        ) : (
-          <>
-            {cart.map((item) => (
-              <div className="cart-item" key={item.id}>
-                <div className="cart-item-main">
-                  <div className="cart-thumb" style={{ backgroundImage: `url(${products.find((product) => product.id === item.id)?.image || 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80'})` }} />
-                  <div className="cart-copy">
-                    <h4>{item.name}</h4>
-                    <p>{formatPrice(item.price)} each</p>
-                  </div>
-                </div>
-
-                <div className="cart-actions-wrap">
-                  <div className="cart-actions">
-                    <button onClick={() => updateCartQuantity(item.id, -1)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => updateCartQuantity(item.id, 1)}>+</button>
-                  </div>
-                  <button className="remove-item" onClick={() => removeFromCart(item.id)}>Remove</button>
-                </div>
-              </div>
-            ))}
-
-            <div className="totals">
-              <div className="total-row">
-                <span>Subtotal</span>
-                <strong>{formatPrice(subtotal)}</strong>
-              </div>
-              <div className="total-row muted-row">
-                <span>Shipping</span>
-                <strong>{subtotal > 75 ? 'Free' : formatPrice(12)}</strong>
-              </div>
-              <div className="total-row grand-total">
-                <span>Total</span>
-                <strong>{formatPrice(subtotal > 75 ? subtotal : subtotal + 12)}</strong>
-              </div>
-            </div>
-
-            <div className="payment-panel">
-              <PaymentCard total={finalTotal} userName={user?.name} />
-            </div>
-
-            <button
-              className="checkout-button"
-              onClick={() => {
-                if (!user) {
-                  navigate('/login');
-                  return;
-                }
-                navigate('/checkout');
-              }}
-            >
-              {user ? 'Go to checkout' : 'Login to checkout'}
-            </button>
-          </>
-        )}
-      </aside>
+      <section className="utility-strip">
+        <div className="utility-card">
+          <span className="utility-icon">🚚</span>
+          <div>
+            <strong>Fast shipping</strong>
+            <small>Free delivery on orders above $75</small>
+          </div>
+        </div>
+        <div className="utility-card">
+          <span className="utility-icon">🛡️</span>
+          <div>
+            <strong>Secure checkout</strong>
+            <small>Protected payment and trusted service</small>
+          </div>
+        </div>
+        <div className="utility-card">
+          <span className="utility-icon">🎁</span>
+          <div>
+            <strong>Gift-ready</strong>
+            <small>Curated products and premium packaging</small>
+          </div>
+        </div>
+        <div className="utility-card">
+          <span className="utility-icon">↩️</span>
+          <div>
+            <strong>Easy returns</strong>
+            <small>Hassle-free 7-day exchanges</small>
+          </div>
+        </div>
+      </section>
     </main>
   );
 };
@@ -1388,11 +1402,23 @@ const App = () => {
       </div>
 
       <footer className="site-footer">
+        <div className="footer-branding">
+          <div>
+            <p className="eyebrow">Northstar Commerce</p>
+            <h3>Modern living, elevated.</h3>
+          </div>
+          <div className="footer-actions">
+            <Link to="/girls">New collection</Link>
+            <Link to="/support">Support</Link>
+            <Link to="/track">Track order</Link>
+          </div>
+        </div>
         <div className="footer-links">
           <Link to="/terms">Terms & Conditions</Link>
           <Link to="/support">Support</Link>
           <Link to="/track">Package Tracking</Link>
           <Link to="/orders">Orders</Link>
+          <Link to="/girls">Girls Fashion</Link>
         </div>
       </footer>
       <Toaster position="top-right" />
