@@ -145,7 +145,11 @@ const Header = ({ user, onLogout, cartCount }) => (
           Logout
         </button>
       )}
-      <Link to="/checkout" className="cart-pill">Cart: {cartCount}</Link>
+      <Link to="/checkout" className="cart-pill">
+        <span className="cart-icon">🛒</span>
+        <span>Cart</span>
+        <span className="cart-count">{cartCount}</span>
+      </Link>
     </nav>
   </header>
 );
@@ -239,6 +243,41 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
           <h2>Elegant essentials for every mood.</h2>
         </div>
         <button className="collection-button">Explore collection</button>
+      </section>
+
+      <section className="girls-showcase">
+        <div className="showcase-header">
+          <div>
+            <p className="eyebrow">Style spotlight</p>
+            <h2>Girls wardrobe edit</h2>
+          </div>
+        </div>
+
+        <div className="showcase-grid">
+          <article className="showcase-card showcase-tall">
+            <img src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80" alt="Girls fashion dress" />
+            <div className="showcase-copy">
+              <span>Party edit</span>
+              <h3>Velvet romance</h3>
+            </div>
+          </article>
+
+          <article className="showcase-card">
+            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80" alt="Girls blazer" />
+            <div className="showcase-copy">
+              <span>Minimal luxe</span>
+              <h3>Soft blazer</h3>
+            </div>
+          </article>
+
+          <article className="showcase-card">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80" alt="Girls outfit" />
+            <div className="showcase-copy">
+              <span>Everyday</span>
+              <h3>Street chic</h3>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section id="catalog" className="catalog">
