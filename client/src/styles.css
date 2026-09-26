@@ -433,6 +433,176 @@ p {
   top: 92px;
 }
 
+.cart-page {
+  margin-top: 28px;
+}
+
+.cart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cart-total-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(59, 130, 246, 0.12);
+  border: 1px solid rgba(96, 165, 250, 0.3);
+  color: #bfdbfe;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.cart-items-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.amazon-cart-item {
+  display: flex;
+  gap: 18px;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.06);
+}
+
+.amazon-cart-image {
+  width: 180px;
+  min-width: 180px;
+  height: 180px;
+  border-radius: 18px;
+  background-size: cover;
+  background-position: center;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.amazon-cart-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.amazon-cart-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.amazon-cart-topline h3 {
+  margin: 0 0 6px;
+  font-size: 1.5rem;
+  letter-spacing: -0.05em;
+}
+
+.amazon-cart-topline span {
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.amazon-cart-topline strong {
+  font-size: 1.4rem;
+  letter-spacing: -0.04em;
+}
+
+.amazon-cart-info p {
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.7;
+}
+
+.amazon-cart-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: auto;
+}
+
+.link-button {
+  border: none;
+  background: transparent;
+  color: #fca5a5;
+  font-weight: 800;
+}
+
+.checkout-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.summary-box {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.05);
+}
+
+.delivery-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(96, 165, 250, 0.2);
+  border-radius: 14px;
+  margin-bottom: 18px;
+}
+
+.delivery-box span,
+.delivery-box small {
+  color: var(--muted);
+}
+
+.delivery-box strong {
+  font-size: 1.08rem;
+}
+
+.summary-totals {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty-cart-card {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 40px 28px;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.empty-cart-card h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.06em;
+  margin-bottom: 12px;
+}
+
+.empty-cart-card p {
+  color: var(--muted);
+}
+
 .cart-item {
   display: flex;
   justify-content: space-between;
@@ -682,6 +852,15 @@ p {
 
 .checkout-button {
   margin-top: 18px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #111827;
+  box-shadow: 0 14px 24px rgba(245, 158, 11, 0.22);
+}
+
+.amazon-button {
+  width: 100%;
+  font-size: 1rem;
+  padding: 14px 18px;
 }
 
 .checkout-button:disabled {
@@ -899,7 +1078,8 @@ textarea {
 @media (max-width: 900px) {
   .page-grid,
   .admin-grid,
-  .hero-banner {
+  .hero-banner,
+  .cart-layout {
     grid-template-columns: 1fr;
   }
 
@@ -911,6 +1091,16 @@ textarea {
   .nav-links {
     width: 100%;
     justify-content: space-between;
+  }
+
+  .amazon-cart-item {
+    flex-direction: column;
+  }
+
+  .amazon-cart-image {
+    width: 100%;
+    min-width: 100%;
+    height: 220px;
   }
 }
 

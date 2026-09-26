@@ -145,7 +145,7 @@ const Header = ({ user, onLogout, cartCount }) => (
           Logout
         </button>
       )}
-      <span className="cart-pill">Cart: {cartCount}</span>
+      <Link to="/checkout" className="cart-pill">Cart: {cartCount}</Link>
     </nav>
   </header>
 );
@@ -321,10 +321,10 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
                   navigate('/login');
                   return;
                 }
-                checkout();
+                navigate('/checkout');
               }}
             >
-              {user ? 'Confirm Payment' : 'Login to checkout'}
+              {user ? 'Go to checkout' : 'Login to checkout'}
             </button>
           </>
         )}
@@ -419,6 +419,117 @@ const AuthPage = ({ onLogin, onRegister, loading }) => {
           <p>Admin: admin@shop.com / admin123</p>
           <p>Customer: user@shop.com / user123</p>
         </div>
+      </div>
+    </main>
+  );
+};
+
+const CartPage = ({ cart, products, user, updateCartQuantity, removeFromCart, checkout }) => {
+  const navigate = useNavigate();
+
+  if (cart.length === 0) {
+    return (
+      <main className="content-page cart-empty-wrap">
+        <div className="empty-cart-card">
+          <p className="eyebrow">Your cart is empty</p>
+          <h1>Looks like you haven’t added anything yet.</h1>
+          <p>Explore new arrivals and build your perfect pick.</p>
+          <button className="primary-button" onClick={() => navigate('/')}>
+            Continue shopping
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shipping = subtotal > 75 ? 0 : 12;
+  const total = subtotal + shipping;
+
+  return (
+    <main className="content-page cart-page">
+      <div className="page-header cart-header">
+        <div>
+          <p className="eyebrow">Shopping cart</p>
+          <h1>Review your order</h1>
+        </div>
+        <span className="cart-total-badge">{cart.reduce((sum, item) => sum + item.quantity, 0)} items</span>
+      </div>
+
+      <div className="cart-layout">
+        <section className="cart-items-panel">
+          {cart.map((item) => {
+            const product = products.find((entry) => entry.id === item.id);
+
+            return (
+              <article className="amazon-cart-item" key={item.id}>
+                <div className="amazon-cart-image" style={{ backgroundImage: `url(${product?.image || 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80'})` }} />
+
+                <div className="amazon-cart-info">
+                  <div className="amazon-cart-topline">
+                    <div>
+                      <h3>{item.name}</h3>
+                      <span>{product?.category || 'Featured'}</span>
+                    </div>
+                    <strong>{formatPrice(item.price * item.quantity)}</strong>
+                  </div>
+
+                  <p>{product?.description || 'Premium quality selection for everyday life.'}</p>
+
+                  <div className="amazon-cart-controls">
+                    <div className="cart-actions">
+                      <button onClick={() => updateCartQuantity(item.id, -1)}>-</button>
+                      <span>{item.quantity}</span>
+                      <button onClick={() => updateCartQuantity(item.id, 1)}>+</button>
+                    </div>
+
+                    <button className="link-button" onClick={() => removeFromCart(item.id)}>Delete</button>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+
+        <aside className="checkout-summary">
+          <div className="summary-box">
+            <div className="delivery-box">
+              <span>Delivery to</span>
+              <strong>{user?.name || 'Guest shopper'}</strong>
+              <small>Fast doorstep delivery</small>
+            </div>
+
+            <div className="summary-totals">
+              <div className="total-row">
+                <span>Subtotal</span>
+                <strong>{formatPrice(subtotal)}</strong>
+              </div>
+              <div className="total-row muted-row">
+                <span>Shipping</span>
+                <strong>{shipping === 0 ? 'Free' : formatPrice(shipping)}</strong>
+              </div>
+              <div className="total-row grand-total">
+                <span>Total</span>
+                <strong>{formatPrice(total)}</strong>
+              </div>
+            </div>
+
+            <button
+              className="checkout-button amazon-button"
+              onClick={() => {
+                if (!user) {
+                  navigate('/login');
+                  return;
+                }
+                checkout();
+              }}
+            >
+              Proceed to secure checkout
+            </button>
+          </div>
+
+          <PaymentCard total={total} userName={user?.name} />
+        </aside>
       </div>
     </main>
   );
@@ -856,6 +967,32 @@ const App = () => {
                 checkout={checkout}
                 removeFromCart={removeFromCart}
                 user={user}
+              />
+            }
+          />
+          <Route
+            path="/checkout"
+            element={
+              <CartPage
+                cart={cart}
+                products={products}
+                user={user}
+                updateCartQuantity={updateCartQuantity}
+                removeFromCart={removeFromCart}
+                checkout={checkout}
+              />
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <CartPage
+                cart={cart}
+                products={products}
+                user={user}
+                updateCartQuantity={updateCartQuantity}
+                removeFromCart={removeFromCart}
+                checkout={checkout}
               />
             }
           />
