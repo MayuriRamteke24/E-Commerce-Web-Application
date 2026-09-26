@@ -289,6 +289,34 @@ const PaymentCard = ({ total, userName }) => (
   </div>
 );
 
+const PaymentSuccessModal = ({ isOpen, total, userName, orderId, onContinue }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="payment-modal-backdrop" onClick={onContinue}>
+      <div className="payment-modal" onClick={(event) => event.stopPropagation()}>
+        <div className="payment-modal-header">
+          <div>
+            <p className="eyebrow">Payment</p>
+            <h3>Checkout successful</h3>
+          </div>
+          <button type="button" className="close-modal" onClick={onContinue} aria-label="Close payment modal">×</button>
+        </div>
+
+        <div className="payment-modal-body">
+          <div className="success-banner">Success</div>
+          <p className="payment-summary">Order #{orderId?.slice(0, 8) || 'new'} • {formatPrice(total)}</p>
+          <PaymentCard total={total} userName={userName} />
+        </div>
+
+        <button type="button" className="primary-button payment-continue" onClick={onContinue}>
+          Continue shopping
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, removeFromCart, user }) => {
   const navigate = useNavigate();
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -650,12 +678,12 @@ const CartPage = ({ cart, products, user, updateCartQuantity, removeFromCart, ch
 
             <button
               className="checkout-button amazon-button"
-              onClick={() => {
+              onClick={async () => {
                 if (!user) {
                   navigate('/login');
                   return;
                 }
-                checkout();
+                await checkout();
               }}
             >
               Proceed to secure checkout
@@ -903,6 +931,12 @@ const App = () => {
   const [orders, setOrders] = useState(() => readLocalStorageArray(ORDERS_KEY, []));
   const [cart, setCart] = useState(() => readLocalStorageArray(CART_KEY, []));
   const [loading, setLoading] = useState(false);
+  const [paymentModal, setPaymentModal] = useState({
+    open: false,
+    total: 0,
+    userName: '',
+    orderId: '',
+  });
 
   useEffect(() => {
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
@@ -1082,12 +1116,13 @@ const App = () => {
       return;
     }
 
+    const orderTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const orderPayload = {
       id: `order-${Date.now()}`,
       userId: user.id,
       userName: user.name,
       items: cart,
-      total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      total: orderTotal,
       status: 'Pending',
       shippingAddress: { city: 'Remote', country: 'USA' },
       createdAt: new Date().toISOString(),
@@ -1108,14 +1143,31 @@ const App = () => {
 
       setOrders((currentOrders) => [data, ...currentOrders]);
       setCart([]);
-      toast.success(`Order placed! Total ${formatPrice(data.total)}`);
+      setPaymentModal({
+        open: true,
+        total: Number(data.total ?? orderTotal),
+        userName: user.name,
+        orderId: data.id || orderPayload.id,
+      });
+      toast.success(`Order placed! Total ${formatPrice(data.total ?? orderTotal)}`);
     } catch (error) {
       const nextOrders = [orderPayload, ...readLocalStorageArray(ORDERS_KEY, [])];
       localStorage.setItem(ORDERS_KEY, JSON.stringify(nextOrders));
       setOrders(nextOrders);
       setCart([]);
+      setPaymentModal({
+        open: true,
+        total: Number(orderPayload.total),
+        userName: user.name,
+        orderId: orderPayload.id,
+      });
       toast.success(`Order placed! Total ${formatPrice(orderPayload.total)}`);
     }
+  };
+
+  const continueAfterPayment = () => {
+    setPaymentModal({ open: false, total: 0, userName: '', orderId: '' });
+    window.location.hash = '#/';
   };
 
   const createProduct = async (values) => {
@@ -1160,6 +1212,13 @@ const App = () => {
     <HashRouter>
       <div className="app-shell">
         <Header user={user} onLogout={logout} cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)} />
+        <PaymentSuccessModal
+          isOpen={paymentModal.open}
+          total={paymentModal.total}
+          userName={paymentModal.userName || user?.name}
+          orderId={paymentModal.orderId}
+          onContinue={continueAfterPayment}
+        />
         <Routes>
           <Route
             path="/"
