@@ -133,6 +133,7 @@ const Header = ({ user, onLogout, cartCount }) => (
 );
 
 const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, user }) => {
+  const navigate = useNavigate();
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
@@ -215,7 +216,16 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, use
               </div>
             </div>
 
-            <button className="checkout-button" onClick={checkout} disabled={!user}>
+            <button
+              className="checkout-button"
+              onClick={() => {
+                if (!user) {
+                  navigate('/login');
+                  return;
+                }
+                checkout();
+              }}
+            >
               {user ? 'Checkout' : 'Login to checkout'}
             </button>
           </>
