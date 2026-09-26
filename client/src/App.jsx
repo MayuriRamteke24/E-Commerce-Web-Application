@@ -113,7 +113,7 @@ const demoProducts = [
   },
 ];
 
-const girlsLookbook = Array.from({ length: 100 }, (_, index) => {
+const girlsLookbook = Array.from({ length: 5000 }, (_, index) => {
   const styles = [
     {
       name: 'City Chic',
@@ -167,12 +167,16 @@ const girlsLookbook = Array.from({ length: 100 }, (_, index) => {
     },
   ];
   const selected = styles[index % styles.length];
+  const price = 69 + ((index * 17) % 210);
 
   return {
     id: `look-${index + 1}`,
     name: `${selected.name} ${index + 1}`,
     mood: selected.mood,
     image: selected.image,
+    price,
+    category: 'Girls',
+    description: `${selected.mood} outfit with a refined fashion-forward finish.`,
   };
 });
 
@@ -703,7 +707,7 @@ const GirlsPage = ({ products, addToCart }) => {
       <section className="lookbook-block">
         <div className="lookbook-head">
           <div>
-            <p className="eyebrow">100+ outfit looks</p>
+            <p className="eyebrow">5000+ outfit looks</p>
             <h2>Choose your favourite style</h2>
           </div>
         </div>
@@ -715,6 +719,18 @@ const GirlsPage = ({ products, addToCart }) => {
               <div className="lookbook-info">
                 <strong>{look.name}</strong>
                 <span>{look.mood}</span>
+                <div className="lookbook-row">
+                  <b>{formatPrice(look.price)}</b>
+                  <button type="button" onClick={() => addToCart({
+                    id: look.id,
+                    name: look.name,
+                    price: look.price,
+                    quantity: 1,
+                    category: 'Girls',
+                    image: look.image,
+                    description: look.description,
+                  })}>Add to cart</button>
+                </div>
               </div>
             </article>
           ))}

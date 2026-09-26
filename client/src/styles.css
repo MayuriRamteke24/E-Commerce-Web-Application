@@ -456,7 +456,7 @@ button {
 .lookbook-info {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   padding: 12px 12px 14px;
 }
 
@@ -469,6 +469,29 @@ button {
   font-size: 0.76rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.lookbook-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.lookbook-row b {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.lookbook-row button {
+  border: none;
+  background: linear-gradient(135deg, #a67b4d, #d4af75);
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-weight: 700;
+  font-size: 0.74rem;
 }
 
 .girls-showcase {
