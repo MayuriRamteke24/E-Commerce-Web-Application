@@ -479,6 +479,142 @@ p {
   border-top: 1px solid var(--line);
 }
 
+.payment-panel {
+  margin-top: 18px;
+}
+
+.upi-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 30px;
+  padding: 24px 20px 14px;
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.95), rgba(10, 10, 10, 0.95));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  color: #fff;
+}
+
+.upi-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.kotak-logo {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  font-weight: 900;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.08em;
+}
+
+.kotak-mark {
+  display: inline-block;
+  font-size: 1.05em;
+}
+
+.kotak-slash {
+  display: inline-block;
+  transform: translateY(-0.12em);
+  font-size: 0.9em;
+}
+
+.upi-title {
+  text-align: center;
+  font-size: clamp(1.2rem, 3vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  margin: 22px 0 20px;
+  color: #fff;
+}
+
+.qr-shell {
+  background: #fff;
+  border-radius: 22px;
+  padding: 18px;
+  width: min(100%, 460px);
+  margin: 0 auto 18px;
+}
+
+.qr-code {
+  position: relative;
+  background: #fff;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  grid-template-rows: repeat(14, 1fr);
+  gap: 2px;
+  padding: 10px;
+}
+
+.qr-block {
+  display: block;
+  background: #111;
+  border-radius: 2px;
+}
+
+.qr-block-a { grid-column: 1 / span 3; grid-row: 1 / span 3; }
+.qr-block-b { grid-column: 5 / span 3; grid-row: 1 / span 3; }
+.qr-block-c { grid-column: 10 / span 3; grid-row: 1 / span 3; }
+.qr-block-d { grid-column: 1 / span 3; grid-row: 6 / span 3; }
+.qr-block-e { grid-column: 5 / span 3; grid-row: 6 / span 3; }
+.qr-block-f { grid-column: 10 / span 3; grid-row: 6 / span 3; }
+.qr-block-g { grid-column: 1 / span 3; grid-row: 11 / span 3; }
+.qr-block-h { grid-column: 5 / span 3; grid-row: 11 / span 3; }
+.qr-block-i { grid-column: 10 / span 3; grid-row: 11 / span 3; }
+.qr-block-j { grid-column: 3 / span 2; grid-row: 3 / span 2; }
+.qr-block-k { grid-column: 8 / span 2; grid-row: 3 / span 2; }
+.qr-block-l { grid-column: 8 / span 2; grid-row: 8 / span 2; }
+
+.payer-name {
+  margin-top: 8px;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+  line-height: 1.06;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: #ffcad5;
+  text-align: left;
+}
+
+.upi-id-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  font-size: 1.15rem;
+  margin-top: 18px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.upi-id-row strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.payment-footer {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0.16));
+  border-radius: 18px;
+  padding: 16px 12px;
+}
+
+.payment-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+}
+
 .checkout-button {
   margin-top: 18px;
 }

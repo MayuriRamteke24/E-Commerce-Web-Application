@@ -132,9 +132,50 @@ const Header = ({ user, onLogout, cartCount }) => (
   </header>
 );
 
+const PaymentCard = ({ total, userName }) => (
+  <div className="upi-card">
+    <div className="upi-header">
+      <div className="kotak-logo">
+        <span className="kotak-mark">kotak</span>
+        <span className="kotak-slash">/</span>
+      </div>
+    </div>
+
+    <div className="upi-title">Scan to pay with any UPI app</div>
+
+    <div className="qr-shell">
+      <div className="qr-code" aria-label="UPI QR code">
+        <span className="qr-block qr-block-a" />
+        <span className="qr-block qr-block-b" />
+        <span className="qr-block qr-block-c" />
+        <span className="qr-block qr-block-d" />
+        <span className="qr-block qr-block-e" />
+        <span className="qr-block qr-block-f" />
+        <span className="qr-block qr-block-g" />
+        <span className="qr-block qr-block-h" />
+        <span className="qr-block qr-block-i" />
+        <span className="qr-block qr-block-j" />
+        <span className="qr-block qr-block-k" />
+        <span className="qr-block qr-block-l" />
+      </div>
+    </div>
+
+    <div className="payer-name">{(userName || 'PIYUSH PARMANAND').toUpperCase()}</div>
+    <div className="upi-id-row">
+      <span>UPI ID:</span>
+      <strong>8459727473@kotakbank</strong>
+    </div>
+
+    <div className="payment-footer">
+      <span className="payment-badge">Kotak811</span>
+    </div>
+  </div>
+);
+
 const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, removeFromCart, user }) => {
   const navigate = useNavigate();
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const finalTotal = subtotal > 75 ? subtotal : subtotal + 12;
 
   return (
     <main className="page-shell">
@@ -230,6 +271,10 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
               </div>
             </div>
 
+            <div className="payment-panel">
+              <PaymentCard total={finalTotal} userName={user?.name} />
+            </div>
+
             <button
               className="checkout-button"
               onClick={() => {
@@ -240,7 +285,7 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
                 checkout();
               }}
             >
-              {user ? 'Checkout' : 'Login to checkout'}
+              {user ? 'Confirm Payment' : 'Login to checkout'}
             </button>
           </>
         )}
