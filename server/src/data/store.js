@@ -19,7 +19,7 @@ export const demoProducts = [
     category: 'Electronics',
     description: 'Track fitness, notifications, and GPS with a premium everyday wearable.',
     image:
-      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80',
   },
   {
     id: 'prod-3',
@@ -40,6 +40,26 @@ export const demoProducts = [
     description: 'A handmade ceramic mug designed for slow mornings and cozy routines.',
     image:
       'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-5',
+    name: 'Crest Headphones',
+    price: 149.0,
+    stock: 16,
+    category: 'Electronics',
+    description: 'Wireless over-ear audio with deep bass, long battery life, and comfort-driven design.',
+    image:
+      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-6',
+    name: 'Harbor Backpack',
+    price: 79.99,
+    stock: 22,
+    category: 'Travel',
+    description: 'A durable everyday backpack built for commuting, travel, and weekend adventures.',
+    image:
+      'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
   },
 ];
 

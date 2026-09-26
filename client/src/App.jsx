@@ -7,6 +7,80 @@ const API_URL = import.meta.env.VITE_API_URL || '/api';
 const CART_KEY = 'northstar-cart';
 const TOKEN_KEY = 'northstar-token';
 const USER_KEY = 'northstar-user';
+const PRODUCTS_KEY = 'northstar-products';
+const USERS_KEY = 'northstar-users';
+const ORDERS_KEY = 'northstar-orders';
+
+const demoProducts = [
+  {
+    id: 'prod-1',
+    name: 'AeroMax Runner',
+    price: 129.99,
+    stock: 24,
+    category: 'Footwear',
+    description: 'Lightweight everyday sneakers built for comfort, movement, and all-day wear.',
+    image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-2',
+    name: 'Nimbus Smartwatch',
+    price: 219,
+    stock: 18,
+    category: 'Electronics',
+    description: 'Premium wearable tech for fitness, notifications, and everyday productivity.',
+    image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-3',
+    name: 'Luma Laptop Stand',
+    price: 89.5,
+    stock: 35,
+    category: 'Accessories',
+    description: 'A refined aluminum stand that lifts your setup for better posture and focus.',
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-4',
+    name: 'Terra Ceramic Mug',
+    price: 24,
+    stock: 42,
+    category: 'Home',
+    description: 'Handcrafted warmth for slow mornings, tea breaks, and cozy rituals.',
+    image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-5',
+    name: 'Crest Headphones',
+    price: 149,
+    stock: 16,
+    category: 'Electronics',
+    description: 'Immersive wireless audio with crisp detail and all-day comfort.',
+    image: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-6',
+    name: 'Harbor Backpack',
+    price: 79.99,
+    stock: 22,
+    category: 'Travel',
+    description: 'A sleek, durable backpack for commutes, campus days, and city escapes.',
+    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
+  },
+];
+
+const demoUsers = [
+  { id: 'admin-demo', name: 'Admin Manager', email: 'admin@shop.com', password: 'admin123', role: 'admin' },
+  { id: 'user-demo', name: 'Demo Customer', email: 'user@shop.com', password: 'user123', role: 'user' },
+];
+
+const readLocalStorageArray = (key, fallback) => {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch {
+    return fallback;
+  }
+};
 
 const readSession = () => {
   const storedToken = localStorage.getItem(TOKEN_KEY) || '';
@@ -62,12 +136,35 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, use
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <main className="page-grid">
-      <section className="catalog">
+    <main className="page-shell">
+      <section className="hero-banner">
+        <div className="hero-copy">
+          <p className="eyebrow">Fresh arrivals</p>
+          <h1>Modern essentials for everyday life.</h1>
+          <p className="hero-text">
+            Discover elevated essentials, smart tech, and curated everyday upgrades for home, work, and travel.
+          </p>
+          <div className="hero-actions">
+            <a href="#catalog" className="primary-link">Shop now</a>
+            <span className="mini-badge">Free shipping over $75</span>
+          </div>
+        </div>
+        <div className="hero-highlight">
+          <span className="highlight-label">Trending now</span>
+          <h3>New season drop</h3>
+          <div className="feature-pills">
+            <span>Premium</span>
+            <span>Fast delivery</span>
+            <span>Clean design</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="catalog" className="catalog">
         <div className="section-header">
           <div>
             <p className="eyebrow">Featured products</p>
-            <h1>Build your everyday essentials</h1>
+            <h2>Build your everyday essentials</h2>
           </div>
         </div>
 
@@ -378,9 +475,9 @@ const App = () => {
   const initialSession = readSession();
   const [user, setUser] = useState(initialSession.user);
   const [token, setToken] = useState(initialSession.token);
-  const [products, setProducts] = useState([]);
-  const [orders, setOrders] = useState([]);
-  const [cart, setCart] = useState(() => JSON.parse(localStorage.getItem(CART_KEY) || '[]'));
+  const [products, setProducts] = useState(() => readLocalStorageArray(PRODUCTS_KEY, demoProducts));
+  const [orders, setOrders] = useState(() => readLocalStorageArray(ORDERS_KEY, []));
+  const [cart, setCart] = useState(() => readLocalStorageArray(CART_KEY, []));
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -403,16 +500,35 @@ const App = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
+  }, [products]);
+
+  useEffect(() => {
+    localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
+  }, [orders]);
+
   const fetchProducts = async () => {
-    const { data } = await api.get('/products');
-    setProducts(data);
+    try {
+      const { data } = await api.get('/products');
+      setProducts(data);
+      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(data));
+    } catch (error) {
+      const fallback = readLocalStorageArray(PRODUCTS_KEY, demoProducts);
+      setProducts(fallback);
+    }
   };
 
   const fetchOrders = async () => {
     if (!token) return;
 
-    const { data } = await api.get('/orders', { headers: authHeaders(token) });
-    setOrders(data);
+    try {
+      const { data } = await api.get('/orders', { headers: authHeaders(token) });
+      setOrders(data);
+    } catch (error) {
+      const storedOrders = readLocalStorageArray(ORDERS_KEY, []);
+      setOrders(storedOrders.filter((order) => order.userId === user?.id || user?.role === 'admin'));
+    }
   };
 
   useEffect(() => {
@@ -465,7 +581,21 @@ const App = () => {
       setToken(data.token);
       toast.success(`Welcome back, ${data.user.name}!`);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Login failed.');
+      const savedUsers = readLocalStorageArray(USERS_KEY, demoUsers);
+      const matchedUser = savedUsers.find(
+        (entry) =>
+          entry.email.toLowerCase() === values.email.toLowerCase() && entry.password === values.password,
+      );
+
+      if (matchedUser) {
+        const userSession = { id: matchedUser.id, name: matchedUser.name, email: matchedUser.email, role: matchedUser.role };
+        setUser(userSession);
+        setToken('demo-token');
+        localStorage.setItem(USER_KEY, JSON.stringify(userSession));
+        toast.success(`Welcome back, ${matchedUser.name}!`);
+      } else {
+        toast.error(error.response?.data?.message || 'Login failed.');
+      }
     } finally {
       setLoading(false);
     }
@@ -480,7 +610,26 @@ const App = () => {
       setToken(data.token);
       toast.success('Account created successfully!');
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Registration failed.');
+      const savedUsers = readLocalStorageArray(USERS_KEY, demoUsers);
+      const existingUser = savedUsers.find((entry) => entry.email.toLowerCase() === values.email.toLowerCase());
+
+      if (existingUser) {
+        toast.error('A user with this email already exists.');
+      } else {
+        const newUser = {
+          id: `user-${Date.now()}`,
+          name: values.name,
+          email: values.email.toLowerCase(),
+          password: values.password,
+          role: 'user',
+        };
+        savedUsers.push(newUser);
+        localStorage.setItem(USERS_KEY, JSON.stringify(savedUsers));
+        const userSession = { id: newUser.id, name: newUser.name, email: newUser.email, role: newUser.role };
+        setUser(userSession);
+        setToken('demo-token');
+        toast.success('Account created successfully!');
+      }
     } finally {
       setLoading(false);
     }
@@ -504,6 +653,17 @@ const App = () => {
       return;
     }
 
+    const orderPayload = {
+      id: `order-${Date.now()}`,
+      userId: user.id,
+      userName: user.name,
+      items: cart,
+      total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0),
+      status: 'Pending',
+      shippingAddress: { city: 'Remote', country: 'USA' },
+      createdAt: new Date().toISOString(),
+    };
+
     try {
       const { data } = await api.post(
         '/orders',
@@ -521,19 +681,36 @@ const App = () => {
       setCart([]);
       toast.success(`Order placed! Total ${formatPrice(data.total)}`);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Checkout failed.');
+      const nextOrders = [orderPayload, ...readLocalStorageArray(ORDERS_KEY, [])];
+      localStorage.setItem(ORDERS_KEY, JSON.stringify(nextOrders));
+      setOrders(nextOrders);
+      setCart([]);
+      toast.success(`Order placed! Total ${formatPrice(orderPayload.total)}`);
     }
   };
 
   const createProduct = async (values) => {
     if (!token) return;
 
+    const productPayload = {
+      id: `prod-${Date.now()}`,
+      name: values.name,
+      description: values.description,
+      price: Number(values.price || 0),
+      stock: Number(values.stock || 0),
+      category: values.category,
+      image: values.image || 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80',
+    };
+
     try {
       const { data } = await api.post('/products', values, { headers: authHeaders(token) });
       setProducts((currentProducts) => [data, ...currentProducts]);
       toast.success(`Product added: ${data.name}`);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Unable to add product.');
+      const nextProducts = [productPayload, ...products];
+      setProducts(nextProducts);
+      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(nextProducts));
+      toast.success(`Product added: ${productPayload.name}`);
     }
   };
 
@@ -543,7 +720,10 @@ const App = () => {
       setOrders((currentOrders) => currentOrders.map((order) => (order.id === orderId ? data : order)));
       toast.success(`Order updated to ${status}`);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'Status update failed.');
+      const updatedOrders = orders.map((order) => (order.id === orderId ? { ...order, status } : order));
+      setOrders(updatedOrders);
+      localStorage.setItem(ORDERS_KEY, JSON.stringify(updatedOrders));
+      toast.success(`Order updated to ${status}`);
     }
   };
 
