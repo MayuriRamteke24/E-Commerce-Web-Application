@@ -556,6 +556,37 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
         </div>
       </section>
 
+      <section className="runway-showcase">
+        <div className="runway-header">
+          <div>
+            <p className="eyebrow">Top runway looks</p>
+            <h2>50000+ fashion moments</h2>
+          </div>
+          <button className="collection-button" onClick={() => navigate('/girls')}>See all looks</button>
+        </div>
+
+        <div className="runway-grid">
+          {[
+            { name: 'Monsoon Luxe', style: 'Soft neutral knitset', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80' },
+            { name: 'Sunset Muse', style: 'Bikini chic resort edit', img: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80' },
+            { name: 'City Glow', style: 'Power suiting and shine', img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80' },
+            { name: 'Velvet Dream', style: 'Evening glam silhouette', img: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80' },
+            { name: 'Peach Drift', style: 'Light casual layers', img: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80' },
+            { name: 'Afterglow Edit', style: 'Luxury beachwear blend', img: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80' },
+            { name: 'Golden Hour', style: 'Sunset satin and denim', img: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80' },
+            { name: 'Pink Pulse', style: 'Bold pop culture style', img: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80' },
+          ].map((look, index) => (
+            <article key={`${look.name}-${index}`} className="runway-card">
+              <img src={look.img} alt={look.name} />
+              <div className="runway-copy">
+                <span>{look.style}</span>
+                <h3>{look.name}</h3>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section id="catalog" className="catalog">
         <div className="section-header">
           <div>
