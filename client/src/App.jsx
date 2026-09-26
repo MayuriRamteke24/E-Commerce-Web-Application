@@ -232,6 +232,9 @@ const Header = ({ user, onLogout, cartCount }) => (
       <Link to="/">Home</Link>
       <Link to="/girls">Girls</Link>
       <Link to="/orders">Orders</Link>
+      <Link to="/track">Track</Link>
+      <Link to="/support">Support</Link>
+      <Link to="/terms">Terms</Link>
       {user?.role === 'admin' && <Link to="/admin">Admin</Link>}
       {!user ? (
         <Link to="/login">Login</Link>
@@ -248,6 +251,111 @@ const Header = ({ user, onLogout, cartCount }) => (
     </nav>
   </header>
 );
+
+const TermsPage = () => (
+  <main className="content-page info-page">
+    <div className="page-header">
+      <div>
+        <p className="eyebrow">Policies</p>
+        <h1>Terms & conditions</h1>
+      </div>
+    </div>
+
+    <div className="info-card">
+      <h2>1. Agreement</h2>
+      <p>By using Northstar Commerce, you agree to our service terms, product availability, prices, and order conditions. These policies may be updated as needed to reflect service changes.</p>
+
+      <h2>2. Orders and payments</h2>
+      <p>Orders are confirmed once payment is successfully processed and the system verifies your purchase details. We reserve the right to cancel orders if payment information cannot be validated or stock is unavailable.</p>
+
+      <h2>3. Shipping and delivery</h2>
+      <p>Estimated delivery timelines depend on shipping method and location. While we make every effort to meet delivery estimates, delays caused by weather, courier service, or destination issues are outside our control.</p>
+
+      <h2>4. Returns and refunds</h2>
+      <p>Eligible returns require a valid order number and item condition that matches our policy. Refunds are processed after inspection and are issued to the original payment method within 5–10 business days.</p>
+
+      <h2>5. Privacy and security</h2>
+      <p>We protect your personal details using reasonable security measures, but we encourage customers to use strong passwords and keep account information secure.</p>
+    </div>
+  </main>
+);
+
+const SupportPage = () => (
+  <main className="content-page info-page">
+    <div className="page-header">
+      <div>
+        <p className="eyebrow">Help center</p>
+        <h1>Support center</h1>
+      </div>
+    </div>
+
+    <div className="support-grid">
+      <div className="info-card">
+        <h2>Popular help topics</h2>
+        <ul className="faq-list">
+          <li>Order tracking and delivery updates</li>
+          <li>Payment and checkout issues</li>
+          <li>Returns, exchanges, and refunds</li>
+          <li>Account login and password reset</li>
+          <li>Product questions and sizing guidance</li>
+        </ul>
+      </div>
+
+      <div className="info-card">
+        <h2>Contact support</h2>
+        <div className="support-contact">
+          <strong>Email</strong>
+          <span>support@northstarcommerce.com</span>
+        </div>
+        <div className="support-contact">
+          <strong>Phone</strong>
+          <span>+1 (800) 555-0147</span>
+        </div>
+        <div className="support-contact">
+          <strong>Hours</strong>
+          <span>Mon–Sat, 9:00 AM to 8:00 PM</span>
+        </div>
+      </div>
+    </div>
+  </main>
+);
+
+const TrackingPage = ({ orders, user }) => {
+  const latestOrders = orders.length > 0 ? orders.slice(0, 3) : [
+    { id: 'order-demo-1', status: 'In transit', total: 149.99 },
+    { id: 'order-demo-2', status: 'Packed', total: 89.5 },
+    { id: 'order-demo-3', status: 'Out for delivery', total: 219 },
+  ];
+
+  return (
+    <main className="content-page info-page">
+      <div className="page-header">
+        <div>
+          <p className="eyebrow">Fast tracking</p>
+          <h1>Package tracking</h1>
+        </div>
+      </div>
+
+      <div className="tracking-grid">
+        {latestOrders.map((order) => (
+          <div key={order.id} className="info-card tracking-card">
+            <div className="tracking-topline">
+              <strong>{order.id.slice(0, 12).toUpperCase()}</strong>
+              <span className={`status-pill ${String(order.status).toLowerCase().replace(/\s+/g, '-')}`}>
+                {order.status}
+              </span>
+            </div>
+            <p>{user ? `Tracking for ${user.name}` : 'Tracking status for your recent shipment'}</p>
+            <div className="tracking-meta">
+              <span>Amount</span>
+              <strong>{formatPrice(order.total)}</strong>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
+  );
+};
 
 const PaymentCard = ({ total, userName }) => (
   <div className="upi-card">
@@ -1261,6 +1369,9 @@ const App = () => {
             }
           />
           <Route path="/girls" element={<GirlsPage products={products} addToCart={addToCart} />} />
+          <Route path="/track" element={<TrackingPage orders={orders} user={user} />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/terms" element={<TermsPage />} />
           <Route path="/login" element={<AuthPage onLogin={handleLogin} onRegister={handleRegister} loading={loading} />} />
           <Route path="/orders" element={<OrdersPage orders={orders} user={user} />} />
           <Route
@@ -1275,6 +1386,15 @@ const App = () => {
           />
         </Routes>
       </div>
+
+      <footer className="site-footer">
+        <div className="footer-links">
+          <Link to="/terms">Terms & Conditions</Link>
+          <Link to="/support">Support</Link>
+          <Link to="/track">Package Tracking</Link>
+          <Link to="/orders">Orders</Link>
+        </div>
+      </footer>
       <Toaster position="top-right" />
     </HashRouter>
   );

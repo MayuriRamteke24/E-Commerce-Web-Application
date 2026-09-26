@@ -1332,6 +1332,101 @@ textarea {
   margin-bottom: 20px;
 }
 
+.info-page {
+  max-width: 1100px;
+  margin: 28px auto 0;
+}
+
+.info-card {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 22px;
+  padding: 24px;
+  color: #f8fafc;
+  box-shadow: 0 18px 32px rgba(15, 23, 42, 0.08);
+}
+
+.info-card h2 {
+  margin-top: 0;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  letter-spacing: -0.04em;
+}
+
+.info-card p,
+.info-card li,
+.info-card span {
+  color: rgba(226, 232, 240, 0.8);
+  line-height: 1.7;
+}
+
+.support-grid,
+.tracking-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.faq-list {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.support-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.support-contact:last-child {
+  border-bottom: none;
+}
+
+.tracking-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tracking-topline,
+.tracking-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.tracking-meta {
+  padding-top: 12px;
+  border-top: 1px solid rgba(148, 163, 184, 0.18);
+}
+
+.tracking-card p {
+  margin: 0;
+}
+
+.site-footer {
+  margin-top: 36px;
+  padding: 24px 20px 36px;
+}
+
+.footer-links {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+  color: var(--muted);
+}
+
+.footer-links a {
+  font-weight: 700;
+}
+
 .orders-list,
 .inventory-list {
   display: flex;
@@ -1386,9 +1481,16 @@ textarea {
   color: #1d4ed8;
 }
 
-.status-pill.shipped {
+.status-pill.shipped,
+.status-pill.in-transit,
+.status-pill.out-for-delivery {
   background: #e0e7ff;
   color: #4338ca;
+}
+
+.status-pill.packed {
+  background: #ede9fe;
+  color: #6d28d9;
 }
 
 .status-pill.delivered {
