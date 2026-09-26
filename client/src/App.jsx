@@ -132,7 +132,7 @@ const Header = ({ user, onLogout, cartCount }) => (
   </header>
 );
 
-const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, user }) => {
+const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, removeFromCart, user }) => {
   const navigate = useNavigate();
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -196,23 +196,37 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, use
           <>
             {cart.map((item) => (
               <div className="cart-item" key={item.id}>
-                <div>
-                  <h4>{item.name}</h4>
-                  <p>{formatPrice(item.price)} each</p>
+                <div className="cart-item-main">
+                  <div className="cart-thumb" style={{ backgroundImage: `url(${products.find((product) => product.id === item.id)?.image || 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=900&q=80'})` }} />
+                  <div className="cart-copy">
+                    <h4>{item.name}</h4>
+                    <p>{formatPrice(item.price)} each</p>
+                  </div>
                 </div>
 
-                <div className="cart-actions">
-                  <button onClick={() => updateCartQuantity(item.id, -1)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => updateCartQuantity(item.id, 1)}>+</button>
+                <div className="cart-actions-wrap">
+                  <div className="cart-actions">
+                    <button onClick={() => updateCartQuantity(item.id, -1)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => updateCartQuantity(item.id, 1)}>+</button>
+                  </div>
+                  <button className="remove-item" onClick={() => removeFromCart(item.id)}>Remove</button>
                 </div>
               </div>
             ))}
 
             <div className="totals">
-              <div>
+              <div className="total-row">
                 <span>Subtotal</span>
                 <strong>{formatPrice(subtotal)}</strong>
+              </div>
+              <div className="total-row muted-row">
+                <span>Shipping</span>
+                <strong>{subtotal > 75 ? 'Free' : formatPrice(12)}</strong>
+              </div>
+              <div className="total-row grand-total">
+                <span>Total</span>
+                <strong>{formatPrice(subtotal > 75 ? subtotal : subtotal + 12)}</strong>
               </div>
             </div>
 
@@ -582,6 +596,11 @@ const App = () => {
     );
   };
 
+  const removeFromCart = (productId) => {
+    setCart((currentCart) => currentCart.filter((item) => item.id !== productId));
+    toast.success('Item removed from cart.');
+  };
+
   const handleLogin = async (values) => {
     setLoading(true);
 
@@ -751,6 +770,7 @@ const App = () => {
                 addToCart={addToCart}
                 updateCartQuantity={updateCartQuantity}
                 checkout={checkout}
+                removeFromCart={removeFromCart}
                 user={user}
               />
             }
