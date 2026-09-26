@@ -22,6 +22,24 @@ const demoProducts = [
     image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=900&q=80',
   },
   {
+    id: 'prod-7',
+    name: 'Velvet Luxe Dress',
+    price: 189.0,
+    stock: 12,
+    category: 'Women',
+    description: 'A statement evening dress designed for graceful silhouettes and standout nights.',
+    image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-8',
+    name: 'Rose Aura Blazer',
+    price: 219.0,
+    stock: 9,
+    category: 'Women',
+    description: 'Sharp tailoring with a feminine finish for elevated office-to-evening styling.',
+    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80',
+  },
+  {
     id: 'prod-2',
     name: 'Nimbus Smartwatch',
     price: 219,
@@ -200,6 +218,27 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
             <span>Clean design</span>
           </div>
         </div>
+      </section>
+
+      <section className="feature-strip">
+        <div className="feature-card dark-card">
+          <span>New in</span>
+          <strong>Girls Collection</strong>
+          <small>Bold silhouettes. Everyday elegance.</small>
+        </div>
+        <div className="feature-card accent-card">
+          <span>Limited drop</span>
+          <strong>Spring edit</strong>
+          <small>Fresh styles in soft neutrals.</small>
+        </div>
+      </section>
+
+      <section className="collection-banner">
+        <div className="collection-copy">
+          <p className="eyebrow">Girls Collection</p>
+          <h2>Elegant essentials for every mood.</h2>
+        </div>
+        <button className="collection-button">Explore collection</button>
       </section>
 
       <section id="catalog" className="catalog">
