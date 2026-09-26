@@ -37,6 +37,18 @@ A full-stack online store built with a React storefront and an Express API. It i
 5. API endpoint:
    http://localhost:5000/api
 
+## GitHub Pages deployment
+
+The storefront is configured for static hosting on GitHub Pages by using a relative base path and hash-based routing, which avoids SPA route issues on Pages.
+
+To deploy the frontend automatically:
+
+1. Push the project to GitHub.
+2. In the repository settings, enable GitHub Pages with the "GitHub Actions" source.
+3. The workflow in .github/workflows/deploy-pages.yml will build and deploy the Vite app.
+
+> Note: the Express backend is not hosted on GitHub Pages, so the API still needs to run locally or on a separate Node host for full e-commerce functionality.
+
 ## Demo Accounts
 
 - Admin: admin@shop.com / admin123

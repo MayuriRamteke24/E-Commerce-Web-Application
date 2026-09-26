@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { HashRouter, Link, Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
@@ -548,7 +548,7 @@ const App = () => {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div className="app-shell">
         <Header user={user} onLogout={logout} cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)} />
         <Routes>
@@ -580,7 +580,7 @@ const App = () => {
         </Routes>
       </div>
       <Toaster position="top-right" />
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
