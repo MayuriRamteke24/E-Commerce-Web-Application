@@ -1,22 +1,23 @@
 :root {
   font-family: Inter, 'Segoe UI', sans-serif;
-  background: #070b14;
-  color: #f8fafc;
+  background: #f5f0e8;
+  color: #1a120d;
   line-height: 1.5;
   font-weight: 400;
-  color-scheme: dark;
-  --bg: #070b14;
-  --bg-2: #101827;
-  --panel: rgba(15, 23, 42, 0.82);
-  --panel-strong: rgba(17, 24, 39, 0.95);
-  --card: #111827;
-  --primary: #f472b6;
-  --primary-strong: #f9a8d4;
-  --primary-soft: rgba(244, 114, 182, 0.12);
-  --accent: #fbbf24;
-  --text: #f8fafc;
-  --muted: #cbd5e1;
-  --line: rgba(148, 163, 184, 0.18);
+  color-scheme: light;
+  --bg: #f5f0e8;
+  --bg-2: #efe2d0;
+  --panel: rgba(255, 255, 255, 0.72);
+  --panel-strong: rgba(255, 255, 255, 0.9);
+  --card: #fffdf9;
+  --primary: #8a6840;
+  --primary-strong: #6e4a2d;
+  --primary-soft: rgba(138, 104, 64, 0.12);
+  --accent: #d4af75;
+  --text: #1d140f;
+  --muted: #625548;
+  --line: rgba(122, 95, 70, 0.18);
+  --shadow-soft: 0 18px 40px rgba(70, 42, 18, 0.08);
 }
 
 * {
@@ -34,9 +35,9 @@ body,
   min-height: 100%;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(244, 114, 182, 0.12), transparent 26%),
-    radial-gradient(circle at bottom right, rgba(251, 191, 36, 0.08), transparent 18%),
-    var(--bg);
+    radial-gradient(circle at top left, rgba(212, 175, 117, 0.22), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(122, 95, 70, 0.09), transparent 20%),
+    linear-gradient(180deg, #f7f2ea 0%, #f3ede5 100%);
 }
 
 body {
@@ -71,22 +72,23 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  background: rgba(15, 23, 42, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(33, 24, 18, 0.93);
+  border: 1px solid rgba(168, 140, 96, 0.35);
   color: #fff;
   border-radius: 20px;
   padding: 18px 22px;
   position: sticky;
   top: 12px;
   z-index: 10;
-  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 18px 30px rgba(25, 16, 10, 0.12);
   backdrop-filter: blur(18px);
 }
 
 .brand {
   font-size: 1.45rem;
   font-weight: 800;
-  letter-spacing: -0.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .nav-links {
@@ -149,11 +151,12 @@ button {
   display: grid;
   grid-template-columns: 1.5fr 0.9fr;
   gap: 20px;
-  padding: 28px;
-  border-radius: 28px;
-  background: linear-gradient(135deg, #100f17 0%, #1e1b4b 32%, #3b1f47 100%);
+  padding: 30px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #1f1712 0%, #3b2f24 26%, #6d4b32 100%);
   color: #fff;
-  box-shadow: 0 28px 60px rgba(15, 23, 42, 0.4);
+  box-shadow: 0 30px 60px rgba(44, 25, 13, 0.18);
+  border: 1px solid rgba(215, 184, 133, 0.2);
 }
 
 .hero-copy {
@@ -167,6 +170,7 @@ button {
   font-size: clamp(2.6rem, 5vw, 4.3rem);
   line-height: 1.02;
   letter-spacing: -0.08em;
+  font-family: Georgia, 'Times New Roman', serif;
 }
 
 .hero-text {
@@ -310,6 +314,163 @@ button {
   box-shadow: 0 16px 28px rgba(244, 114, 182, 0.25);
 }
 
+.girls-page {
+  margin-top: 28px;
+}
+
+.girls-hero {
+  display: grid;
+  grid-template-columns: 1.5fr 0.7fr;
+  gap: 20px;
+  padding: 28px;
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(244, 114, 182, 0.18), rgba(99, 102, 241, 0.12), rgba(15, 23, 42, 0.9));
+  border: 1px solid rgba(244, 114, 182, 0.2);
+  margin-bottom: 22px;
+}
+
+.girls-hero-copy h1 {
+  margin: 0 0 12px;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  letter-spacing: -0.07em;
+}
+
+.girls-hero-copy p:last-child {
+  margin: 0;
+  max-width: 640px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.girls-hero-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  border-radius: 22px;
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.girls-hero-card span,
+.girls-hero-card small {
+  color: var(--muted);
+}
+
+.girls-hero-card strong {
+  font-size: 2rem;
+  letter-spacing: -0.06em;
+}
+
+.girls-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 22px;
+}
+
+.girls-product-card {
+  overflow: hidden;
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.girls-product-card img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+}
+
+.girls-product-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+}
+
+.girls-product-body h3 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.girls-product-body p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.girls-product-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+}
+
+.girls-product-bottom strong {
+  font-size: 1.2rem;
+}
+
+.girls-product-bottom button {
+  flex: 1;
+  max-width: 130px;
+  background: linear-gradient(135deg, #f472b6, #fb7185);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-weight: 800;
+}
+
+.lookbook-block {
+  margin-top: 30px;
+}
+
+.lookbook-head {
+  margin-bottom: 18px;
+}
+
+.lookbook-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+}
+
+.lookbook-item {
+  background: rgba(15, 23, 42, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.lookbook-item img {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.lookbook-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 12px 14px;
+}
+
+.lookbook-info strong {
+  font-size: 0.94rem;
+}
+
+.lookbook-info span {
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
 .girls-showcase {
   margin-top: 18px;
 }
@@ -382,10 +543,10 @@ button {
 .content-page,
 .auth-shell {
   background: var(--panel);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(160, 125, 88, 0.18);
   border-radius: 24px;
   padding: 24px;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+  box-shadow: var(--shadow-soft);
   backdrop-filter: blur(18px);
 }
 
@@ -490,14 +651,14 @@ p {
 .checkout-button,
 .admin-form button {
   width: 100%;
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #a67b4d 0%, #d4af75 100%);
+  color: #fffaf5;
   border: none;
   border-radius: 12px;
   padding: 12px 18px;
   font-weight: 800;
   transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.18);
+  box-shadow: 0 12px 24px rgba(117, 88, 52, 0.18);
 }
 
 .product-card button:hover,

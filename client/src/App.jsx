@@ -40,6 +40,33 @@ const demoProducts = [
     image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80',
   },
   {
+    id: 'prod-9',
+    name: 'Bloom Knit Set',
+    price: 169.0,
+    stock: 15,
+    category: 'Girls',
+    description: 'Soft knit layers designed for comfort, charm, and on-the-go confidence.',
+    image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-10',
+    name: 'Sunlit Pleated Skirt',
+    price: 119.0,
+    stock: 20,
+    category: 'Girls',
+    description: 'A flowy, energizing silhouette that moves beautifully from day to evening.',
+    image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
+  },
+  {
+    id: 'prod-11',
+    name: 'DreamWeave Co-ord',
+    price: 199.0,
+    stock: 11,
+    category: 'Girls',
+    description: 'Trendy matching set with a polished finish for easy styling all day long.',
+    image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80',
+  },
+  {
     id: 'prod-2',
     name: 'Nimbus Smartwatch',
     price: 219,
@@ -85,6 +112,69 @@ const demoProducts = [
     image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
   },
 ];
+
+const girlsLookbook = Array.from({ length: 100 }, (_, index) => {
+  const styles = [
+    {
+      name: 'City Chic',
+      mood: 'Neutral glam',
+      image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Soft Pastel',
+      mood: 'Daydream',
+      image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Street Muse',
+      mood: 'Casual cool',
+      image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Bloom Edit',
+      mood: 'Happy spring',
+      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Coastline',
+      mood: 'Fresh breeze',
+      image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Velvet Glow',
+      mood: 'Event-ready',
+      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Sunset Layer',
+      mood: 'Weekend warm',
+      image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Minimal Muse',
+      mood: 'Clean lines',
+      image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Classic Grace',
+      mood: 'Elegant daily',
+      image: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80',
+    },
+    {
+      name: 'Dreamy Luxe',
+      mood: 'Soft luxury',
+      image: 'https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=900&q=80',
+    },
+  ];
+  const selected = styles[index % styles.length];
+
+  return {
+    id: `look-${index + 1}`,
+    name: `${selected.name} ${index + 1}`,
+    mood: selected.mood,
+    image: selected.image,
+  };
+});
 
 const demoUsers = [
   { id: 'admin-demo', name: 'Admin Manager', email: 'admin@shop.com', password: 'admin123', role: 'admin' },
@@ -136,6 +226,7 @@ const Header = ({ user, onLogout, cartCount }) => (
 
     <nav className="nav-links">
       <Link to="/">Home</Link>
+      <Link to="/girls">Girls</Link>
       <Link to="/orders">Orders</Link>
       {user?.role === 'admin' && <Link to="/admin">Admin</Link>}
       {!user ? (
@@ -242,7 +333,7 @@ const HomePage = ({ products, cart, addToCart, updateCartQuantity, checkout, rem
           <p className="eyebrow">Girls Collection</p>
           <h2>Elegant essentials for every mood.</h2>
         </div>
-        <button className="collection-button">Explore collection</button>
+        <button className="collection-button" onClick={() => navigate('/girls')}>Explore collection</button>
       </section>
 
       <section className="girls-showcase">
@@ -570,6 +661,65 @@ const CartPage = ({ cart, products, user, updateCartQuantity, removeFromCart, ch
           <PaymentCard total={total} userName={user?.name} />
         </aside>
       </div>
+    </main>
+  );
+};
+
+const GirlsPage = ({ products, addToCart }) => {
+  const girlsProducts = products.filter((product) => product.category === 'Girls' || product.category === 'Women');
+
+  return (
+    <main className="content-page girls-page">
+      <section className="girls-hero">
+        <div className="girls-hero-copy">
+          <p className="eyebrow">Girls all clothes</p>
+          <h1>Fresh fits for every mood.</h1>
+          <p>From daily comfort to festive statement looks, discover the newest girls collection with soft details and standout silhouettes.</p>
+        </div>
+        <div className="girls-hero-card">
+          <span>New arrivals</span>
+          <strong>Spring Edit</strong>
+          <small>Premium fabrics • Trend-led design</small>
+        </div>
+      </section>
+
+      <section className="girls-grid">
+        {girlsProducts.map((product) => (
+          <article key={product.id} className="girls-product-card">
+            <img src={product.image} alt={product.name} />
+            <div className="girls-product-body">
+              <span className="category-tag">{product.category}</span>
+              <h3>{product.name}</h3>
+              <p>{product.description}</p>
+              <div className="girls-product-bottom">
+                <strong>{formatPrice(product.price)}</strong>
+                <button onClick={() => addToCart(product)}>Add to cart</button>
+              </div>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section className="lookbook-block">
+        <div className="lookbook-head">
+          <div>
+            <p className="eyebrow">100+ outfit looks</p>
+            <h2>Choose your favourite style</h2>
+          </div>
+        </div>
+
+        <div className="lookbook-grid">
+          {girlsLookbook.map((look) => (
+            <article key={look.id} className="lookbook-item">
+              <img src={look.image} alt={look.name} />
+              <div className="lookbook-info">
+                <strong>{look.name}</strong>
+                <span>{look.mood}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     </main>
   );
 };
@@ -1035,6 +1185,7 @@ const App = () => {
               />
             }
           />
+          <Route path="/girls" element={<GirlsPage products={products} addToCart={addToCart} />} />
           <Route path="/login" element={<AuthPage onLogin={handleLogin} onRegister={handleRegister} loading={loading} />} />
           <Route path="/orders" element={<OrdersPage orders={orders} user={user} />} />
           <Route
